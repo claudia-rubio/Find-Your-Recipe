@@ -1,29 +1,50 @@
 #this file contains basic GUI Stuff
 import tkinter as tk
 from tkinter import Text
-from Recipe import readData
+from Recipes import Recipes
 
-recipes = readData()
+recipe_list = Recipes()
 
+#this function takes the user input, and update how the 
+#search factor of each recipe is calculated
+#if there's input for the ingredient section then the list will be filtered
+#and then sorted
 def submitButton(time, c, d, ni, ing, sort_type):
+    if len(ing) > 1:
+        recipe_list.search_ingredient(ing)
+
     if time.isdigit():
-        recipes[0].time_input = int(time)
+        recipe_list.recipes[0].time_input = int(time)
+    else:
+        recipe_list.recipes[0].time_input = False
+
     if c.isdigit():
-        recipes[0].calories_input = int(c)
+        recipe_list.recipes[0].calories_input = int(c)
+    else:
+        recipe_list.recipes[0].calories_input = False
+
     if ni.isdigit():
-        recipes[0].ni_input = int(ni)
+        recipe_list.recipes[0].ni_input = int(ni)
+    else:
+        recipe_list.recipes[0].ni_input = False
+
     if d == 'E':
-        recipes[0].difficulty_input = 1
+        recipe_list.recipes[0].difficulty_input = 1
     elif d == 'H':
-        recipes[0].difficulty_input = 26
+        recipe_list.recipes[0].difficulty_input = 26
+    else:
+        recipe_list.recipes[0].difficulty_input = False
+    
     myFunct()
 
 def myFunct():
     for i in range(3):
-        recipes[i].calculate_search_factor()
-        recipes[i].print_recipe()
-        print(recipes[i].searchFactor)
+        recipe_list.recipes[i].calculate_search_factor()
+        recipe_list.recipes[i].print_recipe()
+        print(recipe_list.recipes[i].searchFactor)
 
+
+#the following is user interface 
 
 xpos = 0.17
 root = tk.Tk()
