@@ -2,19 +2,20 @@
 import tkinter as tk
 from tkinter import Text
 from Recipes import Recipes
+import time
 
 recipe_list = Recipes()
 
-#this function takes the user input, and update how the 
+#this function takes the user input, and update how the  
 #search factor of each recipe is calculated
 #if there's input for the ingredient section then the list will be filtered
 #and then sorted
-def submitButton(time, c, d, ni, ing, sort_type):
+def submitButton(t, c, d, ni, ing, sort_type):
     if len(ing) > 1:
-        recipe_list.search_ingredient(ing)
+        recipe_list.search_ingredient(ing.lower())
 
-    if time.isdigit():
-        recipe_list.recipes[0].time_input = int(time)
+    if t.isdigit():
+        recipe_list.recipes[0].time_input = int(t)
     else:
         recipe_list.recipes[0].time_input = False
 
@@ -34,15 +35,26 @@ def submitButton(time, c, d, ni, ing, sort_type):
         recipe_list.recipes[0].difficulty_input = 26
     else:
         recipe_list.recipes[0].difficulty_input = False
+
+    start_time = time.time()
     
-    myFunct()
+    if sort_type == True:
+        recipe_list.quickSort(0, len(recipe_list.recipes) - 1)
+    end_time = time.time()
+    
+    myFunct(end_time - start_time)
+    
 
-def myFunct():
-    for i in range(3):
-        recipe_list.recipes[i].calculate_search_factor()
-        recipe_list.recipes[i].print_recipe()
-        print(recipe_list.recipes[i].searchFactor)
-
+def myFunct(elapsed_time):
+    frame2 = tk.Frame(root, bg=greenILike)
+    frame2.place(relwidth=1, relheight=1)
+    l = tk.Label(frame2, text = "Sorted Results" , font=('Helvetica',30,'bold'), bg=greenILike)
+    st = "Time taken:  " + str(elapsed_time)
+    l1 = tk.Label(frame2, text = st, font=('Helvetica', 20, "bold"), bg = greenILike)
+    l.pack()
+    l1.pack()
+    for i in range(20):
+        tk.Label(frame2, anchor = 'w', text = recipe_list.recipes[i].recipe_info(),  bg=greenILike).pack(fill = 'both')
 
 #the following is user interface 
 
@@ -61,13 +73,13 @@ label = tk.Label(frame, text="FIND YOUR RECIPE", font=('Helvetica',30,'bold'), b
 label.place(relx=0.26, rely =0.07)
 
 #Left-hand side labels
-label1 = tk.Label(frame, text="Cooking time:", font=30, bg=greenILike)
+label1 = tk.Label(frame, text="Cooking time (mins):", font=30, bg=greenILike)
 label1.place(relx=xpos, rely=0.32)
 
 label2 = tk.Label(frame, text="Calories:", font=30, bg=greenILike)
 label2.place(relx=xpos, rely =0.42)
 
-label3 = tk.Label(frame, text="Difficulty:", font=30, bg=greenILike)
+label3 = tk.Label(frame, text="Difficulty (E/H):", font=30, bg=greenILike)
 label3.place(relx=xpos, rely =0.52)
 
 #Left-hand side entries

@@ -24,6 +24,12 @@ class Recipe:
         print("Ingredients  (" + str(self.n_i) + ") :")
         for item in self.ingredients:
             print("\t-" + item)
+    def recipe_info(self):
+        value =  str(self.name) + "   Time:  " + str(self.minutes) + "   Calories:  " + str(self.calories) + "  Steps:   " + str(self.n_s) + "  Ingredients:   "
+        for i in self.ingredients:
+            value += str(i) + ",   "
+        return value
+        
 
     #set static variables for comparison, these are set by user input
     @property
