@@ -3,6 +3,8 @@ import tkinter as tk
 from tkinter import *
 from tkscrolledframe import ScrolledFrame
 from Recipes import Recipes
+from Recipe import Recipe
+from Recipes import mergeSort
 import time
 
 greenILike = '#93c47d'
@@ -15,38 +17,44 @@ cook_book = recipe_list.recipes
 #if there's input for the ingredient section then the list will be filtered
 #and then sorted
 def submitButton(t, c, d, ni, ing, sort_type, root):
+    print(t+"\n" + c+"\n")
     if len(ing) > 1:
         recipe_list.search_ingredient(ing.lower())
 
     if t.isdigit():
-        recipe_list.recipes[0].time_input = int(t)
+        Recipe.time_input = int(t)
+        #print("rec time: "+str(recipe_list.recipes[1].time_input) +"\n")
     else:
-        recipe_list.recipes[0].time_input = False
+        Recipe.time_input = False
 
     if c.isdigit():
-        recipe_list.recipes[0].calories_input = int(c)
+        Recipe.calories_input = int(c)
     else:
-        recipe_list.recipes[0].calories_input = False
+        Recipe.calories_input = False
 
     if ni.isdigit():
-        recipe_list.recipes[0].ni_input = int(ni)
+        Recipe.ni_input = int(ni)
     else:
-        recipe_list.recipes[0].ni_input = False
+        Recipe.ni_input = False
 
     if d == 'E':
-        recipe_list.recipes[0].difficulty_input = 1
+        Recipe.difficulty_input = 1
     elif d == 'H':
-        recipe_list.recipes[0].difficulty_input = 26
+        Recipe.difficulty_input = 26
     else:
-        recipe_list.recipes[0].difficulty_input = False
+        Recipe.difficulty_input = False
 
     start_time = time.time()
     
     if sort_type == True:
-        recipe_list.quickSort(0, len(recipe_list.recipes) - 1)
+        mergeSort(recipe_list.recipes)
+    else:
+        recipe_list.heapSort()
+
     end_time = time.time()
     
     draw_frame_2(end_time - start_time, root)
+
     
 
 def draw_frame_2(elapsed_time, root):
@@ -84,11 +92,7 @@ def draw_frame_2(elapsed_time, root):
 def goBack(root):
     draw_frame_1(root)
 
-#the following is user interface 
 
-
-
-#background 
 def draw_frame_1(root):
     recipe_list.recipes = cook_book.copy() #make sure size of list is not shrinked when rentering main menu
     xpos = 0.17
@@ -135,14 +139,14 @@ def draw_frame_1(root):
     entry5.place(relx=0.63, rely=0.52, width=150)
 
     #buttons
-    button1 = tk.Button(frame, text="Sort best matches \nusing Quick Sort", bg='yellow', command=lambda: submitButton(entry1.get(), entry2.get(),
+    button1 = tk.Button(frame, text="Sort best matches \nusing Merge Sort", bg='yellow', command=lambda: submitButton(entry1.get(), entry2.get(),
                                                                                                         entry3.get(), entry4.get(), entry5.get(), True, root))
     button1.place(relx=0.29, rely=0.83)
 
     label6 = tk.Label(frame, text="OR", font=('Helvetica',15,'bold'), bg=greenILike)
     label6.place(relx=0.48, rely =0.83)
 
-    button2 = tk.Button(frame, text="Sort best matches \nusing Merge Sort", bg='yellow', command=lambda: submitButton(entry1.get(), entry2.get(),
+    button2 = tk.Button(frame, text="Sort best matches \nusing Heap Sort", bg='yellow', command=lambda: submitButton(entry1.get(), entry2.get(),
                                                                                                         entry3.get(), entry4.get(), entry5.get(), False, root))
     button2.place(relx=0.60, rely=0.83)
 
