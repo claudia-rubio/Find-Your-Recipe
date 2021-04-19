@@ -13,17 +13,15 @@ cook_book = recipe_list.recipes
 
 
 #this function takes the user input, and update how the  
-#search factor of each recipe is calculated
+#search factor of each recipe will be calculated
 #if there's input for the ingredient section then the list will be filtered
 #and then sorted
 def submitButton(t, c, d, ni, ing, sort_type, root):
-    print(t+"\n" + c+"\n")
     if len(ing) > 1:
         recipe_list.search_ingredient(ing.lower())
 
     if t.isdigit():
         Recipe.time_input = int(t)
-        #print("rec time: "+str(recipe_list.recipes[1].time_input) +"\n")
     else:
         Recipe.time_input = False
 
@@ -56,7 +54,7 @@ def submitButton(t, c, d, ni, ing, sort_type, root):
     draw_frame_2(end_time - start_time, root)
 
     
-
+#this draws the second screen with the results from the sorting
 def draw_frame_2(elapsed_time, root):
     sf = ScrolledFrame(root, bg=greenILike)
     sf.place(relwidth =1, relheight =1)
@@ -78,7 +76,7 @@ def draw_frame_2(elapsed_time, root):
     tk.Label(frame2, padx = 10, text = "Steps", font =('Helvetica', 12, 'bold'), bg = greenILike).grid(row=2, column =4, pady =2)
     tk.Label(frame2, padx = 10, text = "No Ingredients", font =('Helvetica', 12, 'bold'), bg = greenILike).grid(row=2, column =5, pady =2)
     tk.Label(frame2, padx = 20, text = "Ingredients",  font =('Helvetica', 12, 'bold'), bg =greenILike).grid(row = 2, column =6, columnspan = 2, pady = 2, sticky = 'w')
-    for i in range(3, min(len(recipe_list.recipes)-1, 100)):
+    for i in range(3, min(len(recipe_list.recipes)-1, 300)):
         tk.Label(frame2, padx = 20, text = recipe_list.recipes[i-3].name,  bg=greenILike).grid(row = i, column =0, columnspan = 2, pady = 2, sticky = 'w')
         tk.Label(frame2, text = str(recipe_list.recipes[i-3].minutes),  bg=greenILike).grid(row = i, column =2, pady = 2)
         tk.Label(frame2, text = str(recipe_list.recipes[i-3].calories),  bg=greenILike).grid(row = i, column =3, pady = 2)
@@ -94,61 +92,61 @@ def goBack(root):
 
 
 def draw_frame_1(root):
-    recipe_list.recipes = cook_book.copy() #make sure size of list is not shrinked when rentering main menu
+    recipe_list.recipes = cook_book.copy() #make sure size of list is not shrinked when re-entering main menu
     xpos = 0.17
     frame = tk.Frame(root, bg=greenILike)
     frame.place(relwidth=1, relheight=1)
 
     #title Label
     label = tk.Label(frame, text="FIND YOUR RECIPE", font=('Helvetica',30,'bold'), bg=greenILike)
-    label.place(relx=0.26, rely =0.07)
+    label.place(relx=0.33, rely =0.07)
 
     #Left-hand side labels
-    label1 = tk.Label(frame, text="Cooking time (mins):", font=30, bg=greenILike)
+    label1 = tk.Label(frame, text="Cooking time (mins):", font=('Helvetica',18,'normal'), bg=greenILike)
     label1.place(relx=xpos, rely=0.32)
 
-    label2 = tk.Label(frame, text="Calories:", font=30, bg=greenILike)
+    label2 = tk.Label(frame, text="Calories:", font=('Helvetica',18,'normal'), bg=greenILike)
     label2.place(relx=xpos, rely =0.42)
 
-    label3 = tk.Label(frame, text="Difficulty (E/H):", font=30, bg=greenILike)
+    label3 = tk.Label(frame, text="Difficulty (E/H):", font=('Helvetica',18,'normal'), bg=greenILike)
     label3.place(relx=xpos, rely =0.52)
 
     #Left-hand side entries
     entry1 = tk.Entry(frame)
-    entry1.place(relx=xpos+0.15, rely=0.33, width = 60)
+    entry1.place(relx=xpos+0.21, rely=0.33, width = 60)
 
     entry2 = tk.Entry(frame)
-    entry2.place(relx=xpos+0.15, rely=0.43, width = 60)
+    entry2.place(relx=xpos+0.21, rely=0.43, width = 60)
 
     entry3 = tk.Entry(frame)
-    entry3.place(relx=xpos+0.15, rely=0.53, width = 60)
+    entry3.place(relx=xpos+0.21, rely=0.53, width = 60)
 
 
     #right-hand side labels
-    label4 = tk.Label(frame, text="Number of\nIngredients:", font=30, bg=greenILike)
-    label4.place(relx=0.5, rely=0.31)
+    label4 = tk.Label(frame, text="Number of\nIngredients:", font=('Helvetica',18,'normal'), bg=greenILike)
+    label4.place(relx=0.6, rely=0.31)
 
-    label5 = tk.Label(frame, text="Specific\nIngredient:", font=30, bg=greenILike)
-    label5.place(relx=0.5, rely=0.47)
+    label5 = tk.Label(frame, text="Specific\nIngredient:", font=('Helvetica',18,'normal'), bg=greenILike)
+    label5.place(relx=0.6, rely=0.47)
 
     #right-hand side entry
     entry4 = tk.Entry(frame)
-    entry4.place(relx=0.63, rely=0.37, width = 60)
+    entry4.place(relx=0.73, rely=0.34, width = 60)
 
     entry5 = tk.Entry(frame)
-    entry5.place(relx=0.63, rely=0.52, width=150)
+    entry5.place(relx=0.73, rely=0.50, width=150)
 
     #buttons
-    button1 = tk.Button(frame, text="Sort best matches \nusing Merge Sort", bg='yellow', command=lambda: submitButton(entry1.get(), entry2.get(),
+    button1 = tk.Button(frame, text="Sort best matches \nusing Merge Sort", font=('Helvetica',15,'normal'), bg='yellow', command=lambda: submitButton(entry1.get(), entry2.get(),
                                                                                                         entry3.get(), entry4.get(), entry5.get(), True, root))
-    button1.place(relx=0.29, rely=0.83)
+    button1.place(relx=0.20, rely=0.83)
 
     label6 = tk.Label(frame, text="OR", font=('Helvetica',15,'bold'), bg=greenILike)
-    label6.place(relx=0.48, rely =0.83)
+    label6.place(relx=0.43, rely =0.83)
 
-    button2 = tk.Button(frame, text="Sort best matches \nusing Heap Sort", bg='yellow', command=lambda: submitButton(entry1.get(), entry2.get(),
+    button2 = tk.Button(frame, text="Sort best matches \nusing Heap Sort", font=('Helvetica',15,'normal'), bg='yellow', command=lambda: submitButton(entry1.get(), entry2.get(),
                                                                                                         entry3.get(), entry4.get(), entry5.get(), False, root))
-    button2.place(relx=0.60, rely=0.83)
+    button2.place(relx=0.55, rely=0.83)
 
 def main():
     

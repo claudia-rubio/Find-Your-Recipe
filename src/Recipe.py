@@ -34,14 +34,15 @@ class Recipe:
 
     #calculate recipe search factor
     #this function determines the value of the member variable that will be used in sorting
+    #the values are divided by those number to normaliza the data as much as posible, ex a change of 1 min shouldn't be considered as influential as a change of 1 ingredient
     def calculate_search_factor(self):
         self.searchFactor = 0
         if self.ni_input != False:
-            self.searchFactor += abs(self.n_i - self.ni_input)/9
+            self.searchFactor += abs(self.n_i - self.ni_input)/50
         if self.calories_input != False:
-            self.searchFactor += abs(self.calories - self.calories_input)/700
+            self.searchFactor += abs(self.calories - self.calories_input)/1000
         if self.time_input != False:
-            self.searchFactor += abs(self.minutes - self.time_input)/120
+            self.searchFactor += abs(self.minutes - self.time_input)/300
         if self.difficulty_input != False:
-            self.searchFactor += abs(self.n_s - self.difficulty_input)/9
+            self.searchFactor += abs(self.n_s - self.difficulty_input)/50
     
