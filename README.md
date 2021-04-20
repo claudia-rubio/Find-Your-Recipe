@@ -6,4 +6,4 @@
  The user can decide to enter as many inputs for categoreies as they want or no inputs at all, and only inputs entered (if valid) will become a factor in the sorting.  
    
  The purpose is to compare merge sort and heap sort in their best/average/worst case complexities while also providing a fun and useful product.  
- Link to demo: https://www.youtube.com/watch?v=FLCN8pIxCHs 
+ Link to demo: https://www.youtube.com/watch?v=r-ZYo7nEP7Q 
