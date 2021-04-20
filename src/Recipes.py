@@ -37,17 +37,11 @@ class Recipes:
         l = 2 * i + 1     #left
         r = 2 * i + 2     #right
     
-        self.recipes[largest].calculate_search_factor()     
-
-        if l < n:
-            self.recipes[l].calculate_search_factor()
-            if self.recipes[largest].searchFactor < self.recipes[l].searchFactor:
-                largest = l
+        if l < n and self.recipes[largest].searchFactor < self.recipes[l].searchFactor:
+            largest = l
     
-        if r < n:
-            self.recipes[r].calculate_search_factor()
-            if self.recipes[largest].searchFactor < self.recipes[r].searchFactor:
-                largest = r
+        if r < n and self.recipes[largest].searchFactor < self.recipes[r].searchFactor:
+            largest = r
     
         #Change root
         if largest != i:
@@ -84,8 +78,6 @@ def mergeSort(recipes):
 
         # merge lists
         while i < len(L) and j < len(R):
-            L[i].calculate_search_factor()
-            R[i].calculate_search_factor()
             if L[i].searchFactor < R[j].searchFactor:
                 recipes[k] = L[i]
                 i += 1
