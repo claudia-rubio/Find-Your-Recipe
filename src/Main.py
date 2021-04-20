@@ -42,7 +42,7 @@ def submitButton(t, c, d, ni, ing, sort_type, root):
     else:
         Recipe.difficulty_input = False
 
-    for i in range(0, len(recipe_list.recipes)-1):
+    for i in range(0, len(recipe_list.recipes)):
         recipe_list.recipes[i].calculate_search_factor()
 
     start_time = time.time()
